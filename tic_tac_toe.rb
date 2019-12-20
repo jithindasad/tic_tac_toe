@@ -34,13 +34,7 @@ class TicTacToe
                 puts winner
                 break
             end
-            if item.even?
-                puts "#{@player_one}'s turn "
-                play @@player_one_choice
-            elsif item.odd?
-                puts "#{@player_two}'s turn "
-                play @@player_two_choice
-            end
+            item.even? ? (play @@player_one_choice, @player_one) : (play @@player_two_choice, @player_two)
         end
         puts "game over!"
     end
@@ -62,17 +56,13 @@ class TicTacToe
 
     #print winner based on the value returned by winning_conditions_met? method.
     def winner
-        if winning_conditions_met? == "x"
-            "#{@player_one} won!"
-        elsif winning_conditions_met? == "o"
-            "#{@player_two} won!"
-        end
+        winning_conditions_met? == "x" ? "#{@player_one} won!" :  "#{@player_two} won!"
     end
 
     private
-
     #sanitize and insert the input to the board.
-    def play choice
+    def play choice, player
+        puts "#{player}'s turn"
         print "Enter the input: "
         input = gets.chomp.split(",")
         valid_input_arr = input.filter { |item| item.to_i <= 3 && item.to_i > 0 }
