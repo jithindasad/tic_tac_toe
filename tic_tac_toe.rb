@@ -25,24 +25,11 @@ class TicTacToe
        puts ""
     end
 
-    def play choice
-        print "Enter the input: "
-        input = gets.chomp.split(",")
-        valid_input_arr = input.filter { |item| item.to_i <= 3 && item.to_i > 0 }
-        while input.length != valid_input_arr.length
-            puts "wrong format! Insert the entries in the form: x, y. (where x => row, y => column)"
-            print "Enter the input: "
-            input = gets.chomp.split(",")
-            valid_input_arr = input.filter { |item| item.to_i <= 3 && item.to_i > 0 }
-        end
-        @board[(input[0].to_i) - 1][(input[1].to_i) - 1] = choice
-        display_board
-    end
-
     def start_game
         set_profile
         puts "Insert the entries in the form: x, y . where x => row, y => column"
         9.times do |item|
+            #check if winning_conditions_met? doesn't evaluate blank space from default board.
             if winning_conditions_met? && winning_conditions_met? != " "
                 puts winner
                 break
@@ -73,6 +60,7 @@ class TicTacToe
         end
     end
 
+    #print winner based on the value returned by winning_conditions_met? method.
     def winner
         if winning_conditions_met? == "x"
             "#{@player_one} won!"
@@ -81,6 +69,22 @@ class TicTacToe
         end
     end
 
+    private
+
+    #sanitize and insert the input to the board.
+    def play choice
+        print "Enter the input: "
+        input = gets.chomp.split(",")
+        valid_input_arr = input.filter { |item| item.to_i <= 3 && item.to_i > 0 }
+        while input.length != valid_input_arr.length
+            puts "wrong format! Insert the entries in the form: x, y. (where x => row, y => column)"
+            print "Enter the input: "
+            input = gets.chomp.split(",")
+            valid_input_arr = input.filter { |item| item.to_i <= 3 && item.to_i > 0 }
+        end
+        @board[(input[0].to_i) - 1][(input[1].to_i) - 1] = choice
+        display_board
+    end
 end
 
 p = TicTacToe.new
